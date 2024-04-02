@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body dir="rtl">
+    <div class="sing_up">
+        <form action="">
+            <h2>ادخل بياناتك</h2>
+            <br>
+            <label for="text">الاسم:</label>
+            <input type="text" id="text" placeholder="الرجاء ادخال الأسم رباعي">
+            <br><br>
+            <label for="number">العمر:</label>
+            <input type="number" id="number" placeholder="الرجاء إدخال العمر">
+            <br><br>
+            <label for="g">المحافظة:</label>
+            <input type="text" id="g" placeholder="الرجاء ادخال المحافظة">
+            <br><br>
+            <label for="tel">رقم الهاتف:</label>
+            <input type="tel" id="tel" placeholder="الرجاء ادخال رقم الهاتف" maxlength="11">
+            <br><br>
+            <label for="email">الايميل:</label>
+            <input type="email" id="email" placeholder="الرجاء ادخال الأيميل" >
+            <br><br>
+            <label for="gns">الجنس</label>
+            <input type="text" id="gns" placeholder="ذكر ولا انثي">
+            <br><br>
+            <input type="button" id="button" value="تسجيل" onclick="ExportToExcel('xlsx')" >
+            <input type="reset" value="اعادة تسجيل" id="res">
+            
+        </form>
+        <table id="tbl" border="1" style="display:none;">
+            <thead >
+            <th>الأسم</th>
+            <th>العمر</th>
+            <th>المحافظة</th>
+            <th>رقم الهاتف</th>
+            <th>الايميل</th>
+            <th>الجنس</th>
+        </thead>
+        <tr>
+            <td id="td1"></td>
+            <td id="td2"></td>
+            <td id="td3"></td>
+            <td id="td4"></td>
+            <td id="td5"></td>
+            <td id="td6"></td>
+        </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script>
+        function ExportToExcel(type, fn, dl) 
+{
+    //Get values from inputs to table
+    document.getElementById("td1").innerHTML = document.getElementById("text").value;
+    document.getElementById("td2").innerHTML = document.getElementById("number").value;
+    document.getElementById("td3").innerHTML = document.getElementById("g").value;
+    document.getElementById("td4").innerHTML = document.getElementById("tel").value;
+    document.getElementById("td5").innerHTML = document.getElementById("email").value;
+    document.getElementById("td6").innerHTML = document.getElementById("gns").value;
+    
+    var elt = document.getElementById('tbl');
+    var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+    return dl ?
+    XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+    XLSX.writeFile(wb, fn || ('بيانات التسجيل.' + (type || 'xlsx')));
+}
+    </script>
+</body>
+</html>
